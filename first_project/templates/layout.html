@@ -32,7 +32,16 @@
                             <a class="text-muted" href="#" aria-label="Search">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
                             </a>
-                            <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                              {# 로그인 된 경우 --> 로그아웃 / 마이 페이지 #}
+                              {% if user.is_authenticated %}
+                                  <a style="margin-right: 10px;" class="btn btn-sm btn-outline-danger" href="/accounts/logout/">로그아웃</a>
+                                  <a class="btn btn-sm btn-danger" href="#">프로필 수정</a>
+                              {# 로그인 안 된 경우 --> 로그인 / 회원 가입 #}
+                              {% else %}
+                                  <a style="margin-right: 10px;" class="btn btn-sm btn-danger" href="/accounts/login/">로그인</a>
+                                  <a class="btn btn-sm btn-outline-danger" href="/accounts/signup/">회원 가입</a>
+
+                              {% endif %}
                           </div>
                         </div>
                     </header>
