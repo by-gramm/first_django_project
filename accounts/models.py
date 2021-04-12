@@ -9,4 +9,4 @@ class User(AbstractUser):
         (2, '지인'),
         (3, '누군지 모르는')
     )
-    relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES)
+    relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES, blank=False)

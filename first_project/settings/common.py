@@ -1,5 +1,4 @@
 import os
-from os.path import abspath, dirname
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -24,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third Apps
+    'bootstrap4',
     'debug_toolbar',
     # Local Apps
     'accounts',

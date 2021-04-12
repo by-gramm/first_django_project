@@ -1,8 +1,16 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 
-class SignupForm(forms.ModelForm):
-    class Meta:
+class SignupForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'password', 'relation_with_minki']
+        fields = ['username', 'email', 'relation_with_minki']
+
+        def clean_email(self):
+            email = self.cleaned_data.get('email')
+
+            if email and User.objects.filter(email=email).exists():
+                raise forms.ValidationError('어이쿠, 이미 등록된 이메일이네요.')
+            return email
