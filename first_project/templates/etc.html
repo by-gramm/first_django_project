@@ -1,13 +1,16 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div style="font-size: 100px;">
-        땡!
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="font-size: 100px;">땡!</h1>
+
+                {# TODO : 이전 페이지로 돌아가기 구현! #}
+                <a href="">
+                    <button>뒤로 돌아가기</button>
+                </a>
+            </div>
+        </div>
     </div>
-
-    {# TODO : 이전 페이지로 돌아가기 구현! #}
-    <a href="">
-        <button>뒤로 돌아가기</button>
-    </a>
-
 {% endblock %}
