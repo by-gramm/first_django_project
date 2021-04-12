@@ -1,6 +1,6 @@
 __pycache__
 db.sqlite3
-/static
+first_project/static
 /media
 .idea
 .env
