@@ -3,5 +3,10 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # TODO: 선택할 수 있게 하기
-    relation_with_minki = models.CharField(max_length=100)
+    RELATION_CHOICES = (
+        (0, '가족 혹은 친척'),
+        (1, '친구'),
+        (2, '지인'),
+        (3, '누군지 모르는')
+    )
+    relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES)
