@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     # Third Apps
     'bootstrap4',
     'debug_toolbar',
+    'imagekit',
     # Local Apps
     'accounts',
 ]
@@ -109,5 +110,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = ['127.0.0.1']
+
+LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login/'

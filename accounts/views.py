@@ -24,4 +24,4 @@ def signup(request):
 login = LoginView.as_view(template_name='accounts/login_form.html')
 
 
-logout = LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL)
+logout = LogoutView.as_view()
