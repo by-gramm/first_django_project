@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
@@ -23,5 +24,4 @@ def signup(request):
 login = LoginView.as_view(template_name='accounts/login_form.html')
 
 
-def logout(request):
-    return redirect('accounts:login')
+logout = LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL)
