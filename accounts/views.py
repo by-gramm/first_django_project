@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import SignupForm
 
 
+# TODO: 회원가입과 동시에 로그인 되도록 구현
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)

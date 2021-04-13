@@ -6,7 +6,7 @@ from .models import User
 class SignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'email', 'relation_with_minki']
+        fields = ['profile_image', 'username', 'email', 'relation_with_minki']
 
         def clean_email(self):
             email = self.cleaned_data.get('email')
