@@ -12,35 +12,30 @@
 
     </head>
     <body>
-
-        {% if messages %}
-
-        {% endif %}
-
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <header class="blog-header py-3">
+                    <header class="blog-header py-4 mb-3">
                         <div class="row flex-nowrap justify-content-between align-items-center">
                           <div class="col-4 pt-1">
-                            <a class="text-muted" href="#">Subscribe</a>
+                            {# 해당 페이지 만들고 페이지 연결하기 #}
+                              <a class="text-muted" href="/">ABOUT</a>
+                              <a class="text-muted" href="/">HBD</a>
                           </div>
-                          <div class="col-4 text-center">
-                            <a class="blog-header-logo text-dark" href="#">Minki's Blog</a>
+                          <div class="col-4" style="text-align: center;">
+                            <a class="blog-header-logo" href="/">
+                                <img src="{% static "minki times.png" %}" style="width: 200px;"/>
+                            </a>
                           </div>
                           <div class="col-4 d-flex justify-content-end align-items-center">
-                            <a class="text-muted" href="#" aria-label="Search">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
-                            </a>
                               {# 로그인 된 경우 --> 로그아웃 / 마이 페이지 #}
                               {% if user.is_authenticated %}
-                                  <a style="margin-right: 10px;" class="btn btn-sm btn-outline-danger" href="/accounts/logout/">로그아웃</a>
-                                  <a class="btn btn-sm btn-danger" href="#">프로필 수정</a>
+                                  <a style="margin-right: 10px;" class="btn btn-sm btn-outline-danger" href="{% url 'accounts:logout' %}">로그아웃</a>
+                                  <a class="btn btn-sm btn-danger" href="{% url 'accounts:profile_edit' %}">프로필 수정</a>
                               {# 로그인 안 된 경우 --> 로그인 / 회원 가입 #}
                               {% else %}
-                                  <a style="margin-right: 10px;" class="btn btn-sm btn-danger" href="/accounts/login/">로그인</a>
-                                  <a class="btn btn-sm btn-outline-danger" href="/accounts/signup/">회원 가입</a>
-
+                                  <a style="margin-right: 10px;" class="btn btn-sm btn-danger" href="{% url 'accounts:login' %}">로그인</a>
+                                  <a class="btn btn-sm btn-outline-danger" href="{% url 'accounts:signup' %}">회원 가입</a>
                               {% endif %}
                           </div>
                         </div>
@@ -50,8 +45,16 @@
         </div>
 
         {% block content %}
+
         {% endblock %}
 
-        {# TODO: footer 추가하기 #}
+        <div class="mt-5">
+            <footer class="footer mt-auto py-3 bg-light">
+              <div class="container">
+                <span class="text-muted">sticky footer</span>
+              </div>
+            </footer>
+        </div>
+
     </body>
 </html>

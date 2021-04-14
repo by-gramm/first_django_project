@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from imagekit.models import ProcessedImageField
@@ -13,9 +12,8 @@ class User(AbstractUser):
         (3, '누군지 모르는')
     )
 
-    # TODO: 이미지 파일 업로드 안 되는 문제 해결하기!
     profile_image = ProcessedImageField(
-        upload_to='profile_image\%Y\%m\%d',
+        upload_to='profile_image/%Y/%m/%d',
         processors=[ResizeToFill(300, 300)],
         format='JPEG',
         options={'quality': 80},
