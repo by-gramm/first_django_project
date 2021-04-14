@@ -1,15 +1,11 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
-                <h1 style="font-size: 100px;">땡!</h1>
-
-                {# TODO : 이전 페이지로 돌아가기 구현! #}
-                <a href="">
-                    <button>뒤로 돌아가기</button>
-                </a>
+            <div class="col-sm-12 text-center">
+                <img src="{% static 'great_palace.jpg' %}" style="max-width: 1000px; border-radius: 30px;" />
             </div>
         </div>
     </div>

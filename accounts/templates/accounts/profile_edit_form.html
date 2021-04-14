@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
+{% load static %}
 {% load bootstrap4 %}
 
 {% block content %}
     <div class="container">
         <div class="row">
 
-            <div style="width: 200px; float: left">
-                <ul style="list-style: none; font-size: 18px;">
+            <div class="col-sm-3 text-center">
+                <ul style="list-style: none; padding-left: 0px; font-size: 18px;">
                     <li class="pt-3 pb-3">
                         <a style="color: #b21f2d;" href="{% url 'accounts:profile_edit' %}"><b>프로필 수정</b></a>
                     </li>
@@ -14,6 +15,11 @@
                         <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
                     </li>
                 </ul>
+                <div class="pt-3 pb-5 text-center">
+                    <a href="{% url 'etc' %}">
+                        <img src="{% static 'door_icon.png' %}" style="width: 100px;"/>
+                    </a>
+                </div>
             </div>
 
             <div class="col-sm-9">
