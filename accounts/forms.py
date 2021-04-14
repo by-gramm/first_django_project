@@ -20,3 +20,4 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['profile_image', 'username', 'email', 'relation_with_minki']
+
