@@ -12,22 +12,23 @@
 
     </head>
     <body>
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <header class="blog-header py-4 mb-3">
                         <div class="row flex-nowrap justify-content-between align-items-center">
-                          <div class="col-4 pt-1">
+                          <div class="col-3 pt-1">
                             {# 해당 페이지 만들고 페이지 연결하기 #}
                               <a class="text-muted" href="/">ABOUT</a>
                               <a class="text-muted" href="/">HBD</a>
                           </div>
-                          <div class="col-4" style="text-align: center;">
+                          <div class="col-6" style="text-align: center;">
                             <a class="blog-header-logo" href="/">
                                 <img src="{% static "minki times.png" %}" style="width: 200px;"/>
                             </a>
                           </div>
-                          <div class="col-4 d-flex justify-content-end align-items-center">
+                          <div class="col-3 d-flex justify-content-end align-items-center">
                               {# 로그인 된 경우 --> 로그아웃 / 마이 페이지 #}
                               {% if user.is_authenticated %}
                                   <a style="margin-right: 10px;" class="btn btn-sm btn-outline-danger" href="{% url 'accounts:logout' %}">로그아웃</a>
@@ -50,7 +51,19 @@
             </div>
         </div>
 
-
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 mt-3 mb-3" style="margin-left: auto; margin-right: auto; text-align: center;">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="btn btn-success">
+                                {{ message.message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
         {% block content %}
 
