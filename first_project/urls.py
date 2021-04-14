@@ -9,8 +9,7 @@ urlpatterns = [
     re_path(r'admin/?', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'),
-    # 앞선 패턴에 포함되지 않는 모든 경우
-    re_path('', TemplateView.as_view(template_name='etc.html'), name='etc'),
+    path('hidden/', login_required(TemplateView.as_view(template_name='etc.html')), name='etc'),
 ]
 
 if settings.DEBUG:
