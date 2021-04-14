@@ -13,6 +13,7 @@ class User(AbstractUser):
     )
 
     profile_image = ProcessedImageField(
+        blank=True,
         upload_to='profile_image/%Y/%m/%d',
         processors=[ResizeToFill(300, 300)],
         format='JPEG',

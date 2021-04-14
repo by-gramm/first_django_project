@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView
@@ -7,13 +7,13 @@ from django.shortcuts import render, redirect
 from .forms import SignupForm, ProfileForm
 
 
-# TODO: 회원가입과 동시에 로그인 되도록 구현
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
             messages.success(request, "회원가입에 성공하셨습니다! 이민기 씨도 기뻐하시겠군요.")
+            auth_login(request, new_user)
             # TODO: 회원가입 후 리다이렉트 페이지 설정하기
             return redirect('/')
     else:
