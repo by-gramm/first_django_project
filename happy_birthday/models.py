@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -9,3 +10,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     # TODO: 댓글 클래스 만들고 연결하기
 
+    def get_absolute_url(self):
+        return reverse("happy_birthday:post_detail", args=[self.pk])
+
+    class Meta:
+        ordering = ['-id']
