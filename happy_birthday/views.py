@@ -30,3 +30,10 @@ def post_detail(request, pk):
     return render(request, "happy_birthday/post_detail_form.html", {
         'post': post,
     })
+
+
+def index(request):
+    post_list = Post.objects.all()
+    return render(request, "happy_birthday/index.html", {
+        'post_list': post_list,
+    })
