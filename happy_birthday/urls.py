@@ -1,7 +1,8 @@
 from django.urls import path
-from accounts import views
+from happy_birthday import views
 
 app_name = 'happy_birthday'
 
 urlpatterns = [
+    path('post/new/', views.post_new, name="post_new"),
 ]

@@ -38,6 +38,8 @@ def profile_edit(request):
             messages.success(request, "프로필이 수정되었습니다.")
             return redirect('accounts:profile_edit')
     else:
+        # 빈 폼을 할당할 경우, 사용자가 모든 정보를 처음부터 다시 입력해야 한다.
+        # 따라서 instance=request.user를 인자로 주어, 사용자가 현재 정보에서 필요한 부분만 수정할 수 있게 한다.
         form = ProfileForm(instance=request.user)
     return render(request, "accounts/profile_edit_form.html", {
         'form': form,
