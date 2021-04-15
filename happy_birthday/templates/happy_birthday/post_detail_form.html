@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load bootstrap4 static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mb-3">
+                    {% if post.author.profile_image %}
+                        <img src="{{ post.author.profile_image.url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
+                    {% else %}
+                        <img src="{% static "default_profile_image.png" %}" class="rounded-circle" style="width: 100px; height: 100px;" />
+                    {% endif %}
+                    {{ post.author }}
+                </div>
+                <div>
+                    {{ post.content }} <br><br>
+                    {{ post.created_at }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

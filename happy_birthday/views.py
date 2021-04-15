@@ -1,7 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from happy_birthday.forms import PostForm
+from happy_birthday.models import Post
 
 
 @login_required
@@ -21,4 +22,11 @@ def post_new(request):
         form = PostForm()
     return render(request, "happy_birthday/post_form.html", {
         'form': form,
+    })
+
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, "happy_birthday/post_detail_form.html", {
+        'post': post,
     })
