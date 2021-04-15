@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'imagekit',
     # Local Apps
     'accounts',
+    'happy_birthday',
 ]
 
 MIDDLEWARE = [
