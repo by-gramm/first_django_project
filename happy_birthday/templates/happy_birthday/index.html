@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load bootstrap4 static %}
+{% load bootstrap4 %}
 
 {% block content %}
     <div class="container">
@@ -8,11 +8,7 @@
                 {% for post in post_list %}
                     <div class="mb-3">
                         {{ post.pk }}번째 편지 from {{ post.author }}
-                        {% if post.author.profile_image %}
-                            <img src="{{ post.author.profile_image.url }}" class="rounded-circle" style="width: 32px; height: 32px;" />
-                        {% else %}
-                            <img src="{% static "default_profile_image.png" %}" class="rounded-circle" style="width: 32px; height: 32px;" />
-                        {% endif %}
+                        <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 32px; height: 32px;" />
                     </div>
                 {% endfor %}
             </div>

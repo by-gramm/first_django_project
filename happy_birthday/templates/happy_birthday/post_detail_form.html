@@ -6,11 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="mb-3">
-                    {% if post.author.profile_image %}
-                        <img src="{{ post.author.profile_image.url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
-                    {% else %}
-                        <img src="{% static "default_profile_image.png" %}" class="rounded-circle" style="width: 100px; height: 100px;" />
-                    {% endif %}
+                    <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
                     {{ post.author }}
                 </div>
                 <div>
