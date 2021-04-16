@@ -14,8 +14,8 @@
                     {{ post.created_at }}
                 </div>
                 {% if post.author == user %}
-                    <a class="btn btn-primary" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
-                    <a class="btn btn-warning" href="{% url 'happy_birthday:post_delete' pk=post.pk %}">편지 삭제하기</a>
+                    <a class="btn btn-primary mr-3" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
+                    <a class="btn btn-danger" href="{% url 'happy_birthday:post_delete' pk=post.pk %}">편지 삭제하기</a>
                 {% else %}
                     <a class="btn btn-warning" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">남이 쓴 편지 수정</a>
                 {% endif %}

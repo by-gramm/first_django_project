@@ -8,13 +8,13 @@
             <div class="col-sm-3 text-center">
                 <ul style="list-style: none; padding-left: 0px; font-size: 18px;">
                     <li class="pt-3 pb-3">
-                        <a style="color: #b21f2d;" href="{% url 'accounts:profile_edit' %}"><b>프로필 수정</b></a>
+                        <a style="color: #202326;" href="{% url 'accounts:profile_edit' %}">프로필 수정</a>
                     </li>
                     <li class="pt-3 pb-3">
                         <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
                     </li>
                     <li class="pt-3 pb-3">
-                        <a style="color: #202326;" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
+                        <a style="color: #b21f2d;" href="{% url 'accounts:delete' %}"><b>회원 탈퇴</b></a>
                     </li>
                 </ul>
                 <div class="pt-3 pb-5 text-center">
@@ -24,13 +24,16 @@
                 </div>
             </div>
 
-            <div class="col-sm-9">
-                <form action="" method="POST" enctype="multipart/form-data">
+            <div class="col-sm-9 text-center">
+                <br><br><br><br>
+                <form action="" method="POST">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-success">
-                        확인
-                    </button>
+                    <div>
+                        <div class="mb-4">
+                            비밀번호 확인 : <input type="text" name="input_pwd">
+                        </div>
+                        정말로 탈퇴하시겠습니까? <input class="btn btn-danger ml-3" type="submit" value="피도 눈물도 없이 탈퇴하기"/>
+                    </div>
                 </form>
             </div>
         </div>

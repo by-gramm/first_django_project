@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from .forms import SignupForm, ProfileForm
@@ -14,13 +15,28 @@ def signup(request):
             new_user = form.save()
             messages.success(request, "회원가입에 성공하셨습니다! 이민기 씨도 기뻐하시겠군요.")
             auth_login(request, new_user)
-            # TODO: 회원가입 후 리다이렉트 페이지 설정하기
             return redirect('/')
     else:
         form = SignupForm()
     return render(request, 'accounts/signup_form.html', {
         'form': form,
     })
+
+
+# TODO: 비밀번호 입력받을 때 비밀번호가 안 보이게 하기
+@login_required
+def delete(request):
+    if request.method == 'POST':
+        user = request.user
+        input_pwd = request.POST['input_pwd']
+        if check_password(input_pwd, user.password):
+            user.delete()
+            messages.success(request, "회원 탈퇴가 완료되었습니다.")
+            return redirect('/')
+        else:
+            messages.success(request, "비밀번호가 일치하지 않습니다.")
+            return redirect('accounts:delete')
+    return render(request, 'accounts/delete_form.html')
 
 
 login = LoginView.as_view(template_name='accounts/login_form.html')
