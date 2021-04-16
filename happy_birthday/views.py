@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404, resolve_url
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from happy_birthday.forms import PostForm
 from happy_birthday.models import Post
@@ -17,7 +17,7 @@ def post_new(request):
             post.author = request.user
             post.save()
             messages.success(request, f"{request.user}님의 편지가 전송되었습니다.")
-            return redirect('happy_birthday')
+            return redirect('happy_birthday:index')
     else:
         form = PostForm()
     return render(request, "happy_birthday/post_form.html", {

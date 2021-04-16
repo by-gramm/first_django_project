@@ -1,14 +1,25 @@
 {% extends "layout.html" %}
-{% load bootstrap4 %}
+{% load bootstrap4 static %}
 
 {% block content %}
     <div class="container">
         <div class="row">
+            <div>
+                <a class="btn btn-primary mb-5" href="{% url 'happy_birthday:post_new' %}">새 편지 쓰기</a>
+            </div>
             <div class="col-sm-12">
                 {% for post in post_list %}
-                    <div class="mb-3">
+                    <div class="mb-5">
+                        <a class="mr-3" href="{{ post.get_absolute_url }}">
+                            {% if post.pk|divisibleby:2 %}
+                                <img src="{% static 'letter_icon.png' %}" style="width: 100px;" />
+                            {% else %}
+                                <img src="{% static 'letter_icon_2.png' %}" style="width: 100px;" />
+                            {% endif %}
+                        </a>
                         {{ post.pk }}번째 편지 from {{ post.author }}
-                        <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 32px; height: 32px;" />
+                        <img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-2 mr-2" style="width: 32px; height: 32px;" />
+                        발송 시간 : {{ post.created_at }}
                     </div>
                 {% endfor %}
             </div>
