@@ -34,7 +34,7 @@ def post_detail(request, pk):
 
 @login_required
 def post_edit(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if post.author != request.user:
         messages.warning(request, "떽! 남의 편지에 손 대면 안 돼요!")
         return redirect('happy_birthday:post_detail', pk=pk)
@@ -52,6 +52,18 @@ def post_edit(request, pk):
     return render(request, "happy_birthday/post_form.html", {
         'form': form,
     })
+
+
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        messages.warning(request, "떽! 남의 편지를 삭제하려고 하다니!")
+        return redirect('happy_birthday:post_detail', pk=pk)
+
+    post.delete()
+    messages.success(request, f"{request.user}님의 편지는 이제 눈을 씻고 찾아봐도 찾을 수 없습니다!")
+    return redirect('happy_birthday:index')
 
 
 def index(request):
