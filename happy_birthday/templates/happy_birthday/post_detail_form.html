@@ -9,10 +9,15 @@
                     <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
                     {{ post.author }}
                 </div>
-                <div>
+                <div class="mb-3">
                     {{ post.content }} <br><br>
                     {{ post.created_at }}
                 </div>
+                {% if post.author == user %}
+                    <a class="btn btn-primary" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
+                {% else %}
+                    <a class="btn btn-warning" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">남이 쓴 편지 수정</a>
+                {% endif %}
             </div>
         </div>
     </div>

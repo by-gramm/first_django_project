@@ -32,6 +32,28 @@ def post_detail(request, pk):
     })
 
 
+@login_required
+def post_edit(request, pk):
+    post = Post.objects.get(pk=pk)
+    if post.author != request.user:
+        messages.warning(request, "떽! 남의 편지에 손 대면 안 돼요!")
+        return redirect('happy_birthday:post_detail', pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, f"{request.user}님의 편지가 다시 전송되었습니다.")
+            return redirect('happy_birthday:index')
+    else:
+        form = PostForm(instance=post)
+    return render(request, "happy_birthday/post_form.html", {
+        'form': form,
+    })
+
+
 def index(request):
     post_list = Post.objects.all()
     return render(request, "happy_birthday/index.html", {
