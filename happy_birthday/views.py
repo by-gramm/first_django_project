@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from happy_birthday.forms import PostForm
+from happy_birthday.forms import PostForm, CommentForm
 from happy_birthday.models import Post
 
 
@@ -27,8 +27,12 @@ def post_new(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    comments = post.comments.all()
+    comment_form = CommentForm()
     return render(request, "happy_birthday/post_detail_form.html", {
         'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
     })
 
 
@@ -70,4 +74,23 @@ def index(request):
     post_list = Post.objects.all()
     return render(request, "happy_birthday/index.html", {
         'post_list': post_list,
+    })
+
+
+@login_required
+def comment_new(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('happy_birthday:post_detail', pk=pk)
+    else:
+        form = CommentForm()
+    return render(request, "comment_form.html", {
+        'form': form,
     })

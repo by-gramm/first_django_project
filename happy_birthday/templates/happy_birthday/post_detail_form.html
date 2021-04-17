@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="card-body col-sm-12">
                 <div class="mb-3">
                     <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
                     {{ post.author }}
@@ -20,6 +20,28 @@
                     <a class="btn btn-warning" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">남이 쓴 편지 수정</a>
                 {% endif %}
             </div>
+
+            <div class="card-body col-sm-9">
+                {% for comment in comments %}
+                    <div class="col-sm-12 mb-3">
+                    <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
+                    {{ comment.author }} | {{ comment.content }} <br>
+                    {{ comment.created_at }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="card-body col-sm-12">
+                    <form action="{% url 'happy_birthday:comment_new' post.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form comment_form %}
+
+                        <input class="btn btn-primary" type="submit" value="게시"/>
+                    </form>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

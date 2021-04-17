@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-12">
                 {% for post in post_list %}
-                    <div class="mb-5">
+                    <div class="card-body mb-3">
                         <a class="mr-3" href="{{ post.get_absolute_url }}">
                             {% if post.pk|divisibleby:2 %}
                                 <img src="{% static 'letter_icon.png' %}" style="width: 100px;" />
