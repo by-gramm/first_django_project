@@ -21,15 +21,23 @@
                 {% endif %}
             </div>
 
-            <div class="card-body col-sm-9">
-                {% for comment in comments %}
-                    <div class="col-sm-12 mb-3">
-                    <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
-                    {{ comment.author }} | {{ comment.content }} <br>
-                    {{ comment.created_at }}
+            {% for comment in comments %}
+                <div class="col-sm-12 mb-3">
+                    <div class="col-sm-8 mb-3">
+                        <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
+                        {{ comment.author }} | {{ comment.content }} <br>
+                        {{ comment.created_at }}
                     </div>
-                {% endfor %}
-            </div>
+                    {% if user == comment.author %}
+                        <div class="col-sm-3">
+                            <form action="{% url 'happy_birthday:comment_delete' post.pk comment.pk %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="삭제"/>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
 
             {% if user.is_authenticated %}
                 <div class="card-body col-sm-12">

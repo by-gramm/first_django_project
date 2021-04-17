@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from happy_birthday.forms import PostForm, CommentForm
-from happy_birthday.models import Post
+from happy_birthday.models import Post, Comment
 
 
 @login_required
@@ -94,3 +94,16 @@ def comment_new(request, pk):
     return render(request, "comment_form.html", {
         'form': form,
     })
+
+
+@login_required
+def comment_delete(request, pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+
+    if comment.author != request.user:
+        messages.warning(request, "떽! 남의 댓글에 손 대면 안 돼요!")
+        return redirect('happy_birthday:post_detail', pk=pk)
+
+    comment.delete()
+    messages.success(request, f"{request.user}님의 댓글은 이제 눈을 씻고 찾아봐도 찾을 수 없습니다!")
+    return redirect('happy_birthday:post_detail', pk=pk)
