@@ -16,12 +16,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <header class="blog-header py-4 mb-3">
+                    <header class="blog-header py-2 mt-3">
                         <div class="row flex-nowrap justify-content-between align-items-center">
                           <div class="col-3 pt-1">
-                            {# 해당 페이지 만들고 페이지 연결하기 #}
-                              <a class="text-muted" href="/">ABOUT</a>
-                              <a class="text-muted" href="/">HBD</a>
+                              <a class="text-muted btn" href="/">WHO IS MINKI</a>
                           </div>
                           <div class="col-6" style="text-align: center;">
                             <a class="blog-header-logo" href="/">
@@ -43,6 +41,7 @@
                           </div>
                         </div>
                     </header>
+                    <hr style="border:double; height:0px; color:gray;">
                 </div>
             </div>
         </div>
@@ -65,12 +64,30 @@
 
         {% endblock %}
 
-        <div class="mt-5">
-            <footer class="footer mt-auto py-3 bg-light">
-              <div class="container">
-                <span class="text-muted">sticky footer</span>
-              </div>
-            </footer>
+        <div class="container mb-3">
+            <div class="row">
+                <div class="col-sm-12">
+                    <hr style="border:double; height:0px; color:gray;">
+
+                    <div class="mt-4">
+                        <footer class="container">
+                            <p class="float-right"><a style="text-decoration: none; color:slategray;" href="#">맨 위로 올라가기</a></p>
+                            <p class="float-left">
+                                &copy; by-gramm. <br><br>
+                                사이트 코드
+                                <a style="text-decoration: none" href="https://github.com/by-gramm/first_django_project">
+                                    <img style="margin-left: 23px" src="{% static 'github_logo.png' %}" width="24px"/>
+                                </a><br>
+                                개발자 블로그
+                                <a style="text-decoration: none" href="https://blog.naver.com/ready2start">
+                                    <img class="ml-2" src="{% static 'email_logo.jpg' %}" width="24px"/>
+                                </a>
+                            </p>
+
+                        </footer>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </body>
