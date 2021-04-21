@@ -22,6 +22,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # Allauth Apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
     # Third Apps
     'bootstrap4',
     'debug_toolbar',
@@ -61,6 +67,24 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SITE_ID = 2
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'kakao': {
+        'Minki Times': {
+            'client_id': str(os.getenv('KAKAO_ID')),
+            'secret': str(os.getenv('APP_KEY')),
+            'key': ''
+        }
+    }
+}
+
 
 WSGI_APPLICATION = 'first_project.wsgi.application'
 

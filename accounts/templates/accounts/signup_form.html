@@ -3,12 +3,16 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
+        <div class="row pb-5">
+            <div class="col-sm-6" style="margin: 0 auto;">
+                <a href="{% url 'accounts:kakao_login' %}" class="btn btn-warning" style="width: 100%">
+                    카카오로 로그인
+                </a>
+                <hr/><br>
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" class="btn btn-outline-danger">
                         즉시☜☜가입100%무료※※
                     </button>
                 </form>

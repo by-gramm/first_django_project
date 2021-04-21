@@ -12,15 +12,22 @@ class User(AbstractUser):
         (3, '누군지 모르는')
     )
 
+    LOGIN_CHOICES = (
+        ("email", "Email"),
+        ("kakao", "Kakao"),
+    )
+
     profile_image = ProcessedImageField(
         blank=True,
         upload_to='profile_image/%Y/%m/%d',
         processors=[ResizeToFill(300, 300)],
         format='JPEG',
         options={'quality': 80},
+        help_text='따로 지정하지 않으면 기본 이미지로 저장됩니다.'
     )
-    relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES, blank=False)
+    relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES, default=2)
 
+    login_method = models.CharField(max_length=6, choices=LOGIN_CHOICES, default="email")
 
     @property
     def profile_image_url(self):

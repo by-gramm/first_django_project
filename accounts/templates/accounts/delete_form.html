@@ -3,16 +3,18 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
+        <div class="row pb-5">
 
             <div class="col-sm-3 text-center">
                 <ul style="list-style: none; padding-left: 0px; font-size: 18px;">
                     <li class="pt-3 pb-3">
                         <a style="color: #202326;" href="{% url 'accounts:profile_edit' %}">프로필 수정</a>
                     </li>
-                    <li class="pt-3 pb-3">
-                        <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
-                    </li>
+                    {% if user.login_method == 'email' %}
+                        <li class="pt-3 pb-3">
+                            <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
+                        </li>
+                    {% endif %}
                     <li class="pt-3 pb-3">
                         <a style="color: #b21f2d;" href="{% url 'accounts:delete' %}"><b>회원 탈퇴</b></a>
                     </li>
@@ -24,15 +26,18 @@
                 </div>
             </div>
 
-            <div class="col-sm-9 text-center">
+            <div class="col-sm-6 text-center" style="margin: 0 auto;">
                 <br><br><br><br>
                 <form action="" method="POST">
                     {% csrf_token %}
                     <div>
-                        <div class="mb-4">
+                        {% if user.login_method == 'email' %}
                             비밀번호 확인 : <input type="text" name="input_pwd">
-                        </div>
-                        정말로 탈퇴하시겠습니까? <input class="btn btn-danger ml-3" type="submit" value="피도 눈물도 없이 탈퇴하기"/>
+                        {% endif %}
+                        <br><br>
+                        정말로 탈퇴하시겠습니까? <input class="btn btn-outline-danger ml-3" type="submit" value="피도 눈물도 없이 탈퇴하기"/>
+                        <div class="mb-4 mt-4"><hr/></div>
+                        <h5><b>주의 : 탈퇴 시 작성한 글과 댓글도 모두 삭제됩니다.</b></h5>
                     </div>
                 </form>
             </div>

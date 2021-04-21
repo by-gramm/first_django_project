@@ -1,17 +1,20 @@
 {% extends "layout.html" %}
-{% load bootstrap4 %}
+{% load bootstrap4 socialaccount %}
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
+        <div class="row pb-5">
+            <div class="col-sm-6" style="margin: 0 auto;">
                 <form action="" method="POST">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" style="width: 100%">
                         로그인
                     </button>
-                </form>
+                </form> <hr>
+                <a href="{% url 'accounts:kakao_login' %}" class="btn btn-warning" style="width: 100%">
+                    카카오로 로그인
+                </a>
             </div>
         </div>
     </div>

@@ -1,11 +1,15 @@
+import os
+import requests
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from .forms import SignupForm, ProfileForm
+from .models import User
 
 
 def signup(request):
@@ -28,18 +32,118 @@ def signup(request):
 def delete(request):
     if request.method == 'POST':
         user = request.user
-        input_pwd = request.POST['input_pwd']
-        if check_password(input_pwd, user.password):
+        if user.login_method == 'kakao':
             user.delete()
             messages.success(request, "회원 탈퇴가 완료되었습니다.")
             return redirect('/')
         else:
-            messages.success(request, "비밀번호가 일치하지 않습니다.")
-            return redirect('accounts:delete')
+            input_pwd = request.POST['input_pwd']
+            if check_password(input_pwd, user.password):
+                user.delete()
+                messages.success(request, "회원 탈퇴가 완료되었습니다.")
+                return redirect('/')
+            else:
+                messages.success(request, "비밀번호가 일치하지 않습니다.")
+                return redirect('accounts:delete')
     return render(request, 'accounts/delete_form.html')
 
 
 login = LoginView.as_view(template_name='accounts/login_form.html')
+
+
+def kakao_login(request):
+    rest_api_key = str(os.getenv('KAKAO_ID'))
+    # TODO : 실서비스 시에 redirect_uri 바꾸기
+    redirect_uri = "http://localhost:8000/accounts/login/kakao/callback/"
+    return redirect(
+        f"https://kauth.kakao.com/oauth/authorize?client_id={rest_api_key}&redirect_uri={redirect_uri}&response_type=code"
+    )
+
+
+def kakao_callback(request):
+    if request.user.is_authenticated:
+        messages.error(request, "이미 로그인되어 있습니다.")
+        return redirect('/')
+
+    code = request.GET.get("code", None)
+    if code is None:
+        messages.error(request, "로그인에 실패했습니다.")
+        return redirect('/')
+
+    rest_api_key = str(os.getenv('KAKAO_ID'))
+    # TODO : 실서비스 시에 redirect_uri 바꾸기
+    redirect_uri = "http://localhost:8000/accounts/login/kakao/callback/"
+    client_secret = str(os.getenv('CLIENT_SECRET_KEY'))
+    request_access_token = requests.post(
+        f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={rest_api_key}&redirect_uri={redirect_uri}&code={code}&client_secret={client_secret}",
+        headers={"Accept": "application/json"},
+    )
+    access_token_json = request_access_token.json()
+
+    error = access_token_json.get("error", None)
+    if error is not None:
+        print(error)
+        messages.error("토큰에 접근할 수 없습니다.")
+        return redirect('/')
+
+    access_token = access_token_json.get("access_token")
+    headers = {"Authorization": f"Bearer {access_token}"}
+    profile_request = requests.post(
+        "https://kapi.kakao.com/v2/user/me",
+        headers=headers,
+    )
+    profile_json = profile_request.json()
+    kakao_account = profile_json.get("kakao_account")
+    profile = kakao_account.get("profile")
+
+    username = profile.get("nickname", None)
+    profile_image_url = profile.get("profile_image_url", None)
+    email = kakao_account.get("email", None)
+
+    # 카카오 유저 정보에서 가져온 이메일과 같은 이메일을 쓰는 유저 중
+    # 카카오로 회원가입한 유저가 있다면 (user_exist = True)
+    # 이미 가입한 사용자이므로 바로 로그인시킨다.
+    same_email_users = User.objects.filter(email=email).all()
+    user_exist = False
+
+    for user in same_email_users:
+        if user.login_method == 'kakao':
+            user_exist = True
+            break
+
+    if not user_exist:
+        # 카카오톡 사용자 이름이 이미 사용 중인 username과 겹치는 경우,
+        # 겹치지 않도록 뒤에 숫자를 붙여준다.
+        user = User.objects.filter(username=username).first()
+        if user:
+            username += '2'
+            num_for_username = 3
+
+            while True:
+                user = User.objects.filter(username=username).first()
+                if user:
+                    username = username[:-1] + str(num_for_username)
+                    num_for_username += 1
+                else:
+                    break
+
+        user = User.objects.create_user(
+            email=email,
+            username=username,
+            login_method='kakao',
+        )
+
+        if profile_image_url is not None:
+            profile_image_request = requests.get(profile_image_url)
+            user.profile_image.save(
+                f"{username}의 프로필 사진", ContentFile(profile_image_request.content)
+            )
+
+    user.set_unusable_password()
+    user.save()
+    messages.success(request, "카카오로 로그인했습니다.")
+    auth_login(request, user)
+    return redirect('accounts:profile_edit')
 
 
 logout = LogoutView.as_view()
@@ -64,6 +168,11 @@ def profile_edit(request):
 
 @login_required
 def password_change(request):
+    user = request.user
+    if user.login_method == 'kakao':
+        messages.success(request, "카카오톡 로그인 계정은 비밀번호가 없습니다.")
+        return redirect('accounts:profile_edit')
+
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():

@@ -3,34 +3,39 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
+        <div class="row pb-5">
 
             <div class="col-sm-3 text-center">
-                <ul style="list-style: none; padding-left: 0px; font-size: 18px;">
+                <ul class="align-center" style="list-style: none; padding-left: 0px; font-size: 18px;">
                     <li class="pt-3 pb-3">
                         <a style="color: #b21f2d;" href="{% url 'accounts:profile_edit' %}"><b>프로필 수정</b></a>
                     </li>
-                    <li class="pt-3 pb-3">
-                        <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
-                    </li>
+                    {% if user.login_method == 'email' %}
+                        <li class="pt-3 pb-3">
+                            <a style="color: #202326;" href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
+                        </li>
+                    {% endif %}
                     <li class="pt-3 pb-3">
                         <a style="color: #202326;" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
                     </li>
+                    <div class="pt-3 pb-5 text-center">
+                        <a href="{% url 'etc' %}">
+                            <img src="{% static 'door_icon.png' %}" style="width: 100px;"/>
+                        </a>
+                    </div>
                 </ul>
-                <div class="pt-3 pb-5 text-center">
-                    <a href="{% url 'etc' %}">
-                        <img src="{% static 'door_icon.png' %}" style="width: 100px;"/>
-                    </a>
-                </div>
             </div>
 
-            <div class="col-sm-9">
+            <div class="col-sm-6" style="margin: 0 auto;">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success mr-2">
                         확인
                     </button>
+                    {% if user.login_method == 'kakao' %}
+                        (주의: 카카오 가입 계정이 이메일 주소를 바꿀 경우, 재로그인시 기존 정보가 남지 않습니다.)
+                    {% endif %}
                 </form>
             </div>
         </div>
