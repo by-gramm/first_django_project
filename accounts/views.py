@@ -27,7 +27,6 @@ def signup(request):
     })
 
 
-# TODO: 비밀번호 입력받을 때 비밀번호가 안 보이게 하기
 @login_required
 def delete(request):
     if request.method == 'POST':

@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <div>
                         {% if user.login_method == 'email' %}
-                            비밀번호 확인 : <input type="text" name="input_pwd">
+                            비밀번호 확인 : <input type="password" name="input_pwd">
                         {% endif %}
                         <br><br>
                         정말로 탈퇴하시겠습니까? <input class="btn btn-outline-danger ml-3" type="submit" value="피도 눈물도 없이 탈퇴하기"/>
