@@ -9,7 +9,7 @@ class User(AbstractUser):
         (0, '가족 혹은 친척'),
         (1, '친구'),
         (2, '지인'),
-        (3, '누군지 모르는')
+        (3, '이제부터 알아갈게요')
     )
 
     LOGIN_CHOICES = (
@@ -25,6 +25,8 @@ class User(AbstractUser):
         options={'quality': 80},
         help_text='따로 지정하지 않으면 기본 이미지로 저장됩니다.'
     )
+    email = models.EmailField(max_length=100, unique=True, blank=True, null=True, help_text="적지 않아도 괜찮습니다.")
+
     relation_with_minki = models.SmallIntegerField(choices=RELATION_CHOICES, default=2)
 
     login_method = models.CharField(max_length=6, choices=LOGIN_CHOICES, default="email")

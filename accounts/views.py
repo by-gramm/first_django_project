@@ -99,24 +99,15 @@ def kakao_callback(request):
     profile_image_url = profile.get("profile_image_url", None)
     email = kakao_account.get("email", None)
 
-    # 카카오 유저 정보에서 가져온 이메일과 같은 이메일을 쓰는 유저 중
-    # 카카오로 회원가입한 유저가 있다면 (user_exist = True)
+    # 카카오 유저 정보에서 가져온 이메일과 같은 이메일을 쓰는 유저가 있다면
     # 이미 가입한 사용자이므로 바로 로그인시킨다.
-    same_email_users = User.objects.filter(email=email).all()
-    user_exist = False
-
-    for user in same_email_users:
-        if user.login_method == 'kakao':
-            user_exist = True
-            break
-
-    if not user_exist:
+    if User.objects.filter(email=email).exists():
         # 카카오톡 사용자 이름이 이미 사용 중인 username과 겹치는 경우,
         # 겹치지 않도록 뒤에 숫자를 붙여준다.
         user = User.objects.filter(username=username).first()
         if user:
             username += '2'
-            num_for_username = 3
+            num_for_username = 2
 
             while True:
                 user = User.objects.filter(username=username).first()
