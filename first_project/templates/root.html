@@ -6,75 +6,52 @@
         <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
             <div class="col-md-12 px-0">
                 <a href="{% url 'happy_birthday:index' %}">
-                    <img src="{% static '임시 배경화면.jpg' %}" class="col-md-12 px-0 mb-3"/>
+                    <img src="{% static '이민기 생일축하 전광판.png' %}" class="col-md-12 px-0 mb-3"/>
                 </a>
-                <h1 class="display-4">대충 제목</h1>
-                <p class="lead my-3">이미지를 클릭하면 생일축하 게시판으로 이동합니다.</p>
+                <br><br>
+                <div class="lead my-3 text-center" style="font-family: KoPubWorld돋움체 Medium">
+                    <h4>(이미지를 클릭하면 생일축하 게시판으로 이동합니다.)</h4>
+                </div>
             </div>
         </div>
 
         <div class="row mb-2">
-            <div class="col-md-6">
-              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col-md-12 mb-2">
+              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="min-height: 300px;">
+                  <div class="col-auto d-none d-lg-block">
+                    <img src="{{ 'media/article_image/2021/04/24/콩이_고양이_낚시.png' }}" class="bd-placeholder-img" width="480" height="300" />
+                  </div>
                 <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-primary">World</strong>
-                  <h3 class="mb-0">Featured post</h3>
-                  <div class="mb-1 text-muted">Nov 12</div>
-                  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                  <strong class="d-inline-block mb-2 text-primary">Culture</strong>
+                  <h3 class="mb-0">화제의 고양이 '콩이'... 고양이 낚시 영상 큰 화제</h3> <br>
+                  <p class="card-text mb-auto">유튜브 채널 <뜨거운 고양이 콩이>의 영상 "고양이 낚시"가 화제다.</p>
+                  <a href="{% url 'article:article_detail' 2 %}" class="stretched-link" style="text-decoration: none;">계속 읽기</a>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-success">Design</strong>
-                  <h3 class="mb-0">Post title</h3>
-                  <div class="mb-1 text-muted">Nov 11</div>
-                  <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
+            <div class="col-md-5">
+              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="min-height: 300px;">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <strong class="d-inline-block mb-2 text-success">Life</strong>
+                  <h3 class="mb-0">[단독] 이민기, 아낌없는 선행 약속</h3> <br>
+                  <p class="card-text mb-auto">4월 28일 생일을 맞는 이민기 씨가 큰 선행을 펼치기로 해 화제다.</p>
+                  <a href="{% url 'article:article_detail' 3 %}" class="stretched-link" style="text-decoration: none;">계속 읽기</a>
                 </div>
               </div>
             </div>
-        </div>
 
-                <div class="row mb-2">
-            <div class="col-md-6">
-              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col-md-7">
+              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="min-height: 300px;">
                 <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-primary">World</strong>
-                  <h3 class="mb-0">Featured post</h3>
-                  <div class="mb-1 text-muted">Nov 12</div>
-                  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
+                  <strong class="d-inline-block mb-2 text-danger">Ecomony</strong>
+                  <h3 class="mb-0">일론 머스크의 Next Step</h3> <br>
+                  <p class="card-text mb-auto">연일 파격적인 행보를 이어가고 있는 일론 머스크의 다음 행보에 대한 소식이 알려졌다.</p>
+                  <a href="{% url 'article:article_detail' 4 %}" class="stretched-link" style="text-decoration: none;">계속 읽기</a>
                 </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-success">Design</strong>
-                  <h3 class="mb-0">Post title</h3>
-                  <div class="mb-1 text-muted">Nov 11</div>
-                  <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                </div>
+                  <div class="col-auto d-none d-lg-block">
+                    <img src="{{ 'media/article_image/2021/04/24/일론_머스크.jpg' }}" class="bd-placeholder-img" width="200" height="300" />
+                  </div>
               </div>
             </div>
         </div>
