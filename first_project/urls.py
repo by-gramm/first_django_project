@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('accounts/', include("allauth.urls")),
     path('happy_birthday/', include('happy_birthday.urls')),
+    path('news/', include('news_article.urls')),
     path('', TemplateView.as_view(template_name='root.html'), name='root'),
     path('hidden/', login_required(TemplateView.as_view(template_name='etc.html')), name='etc'),
 ]

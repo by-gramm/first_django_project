@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts',
     'happy_birthday',
+    'news_article',
 ]
 
 MIDDLEWARE = [
