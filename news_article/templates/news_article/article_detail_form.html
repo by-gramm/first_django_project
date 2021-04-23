@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% load bootstrap4 static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card-body col-sm-12" style="text-align: justify;">
+                <div class="mb-3">
+                    <h1 class="text-center mb-5">{{ article.title }}</h1> <hr style="height:0px; color:gray;">
+                    <div class="text-right">
+                        <img class="text-center rounded-circle" src="{{ article.author.profile_image_url }}" style="width: 30px; height: 30px;" /> {{ article.author }} 기자
+                        <br> 게시 시간 : {{ article.created_at }} <hr/>
+                    </div>
+                </div>
+
+                <div class="card-body col-sm-12 text-center mt-3 mb-5">
+                    <img src="{{ article.article_image.url }}" class="mt-5 mb-5" style="width: 1000px;" />
+                </div>
+
+                <div class="mb-5" style="font-size: 17px; font-family: 'KoPubWorld바탕체 Medium'">
+                    <p style="margin-left: 10%; margin-right: 10%;">{{ article.content|linebreaksbr }}</p>
+                </div>
+
+                {% if article.author == user %}
+                    <hr style="height:0px; color:gray;">
+                    <a class="btn btn-primary mr-3" href="{% url 'article:article_edit' pk=article.pk %}">기사 수정하기</a>
+                    <a class="btn btn-danger" href="{% url 'article:article_delete' pk=article.pk %}">기사 삭제하기</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
