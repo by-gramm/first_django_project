@@ -31,6 +31,12 @@ class User(AbstractUser):
 
     login_method = models.CharField(max_length=6, choices=LOGIN_CHOICES, default="email")
 
+    # unique=True 조건을 만족시키기 위해,
+    # 입력하지 않은 이메일 필드의 값을 null값으로 바꾼다.
+    def clean(self):
+        if self.email == "":
+            self.email = None
+
     @property
     def profile_image_url(self):
         if self.profile_image:
