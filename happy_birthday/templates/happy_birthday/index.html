@@ -1,28 +1,42 @@
 {% extends "layout.html" %}
-{% load bootstrap4 static %}
+{% load bootstrap4 static humanize %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div>
-                <a class="btn btn-primary mb-5" href="{% url 'happy_birthday:post_new' %}">새 편지 쓰기</a>
-            </div>
             <div class="col-sm-12">
-                {% for post in post_list %}
-                    <div class="card-body mb-3">
-                        <a class="mr-3" style="color: white;" href="{{ post.get_absolute_url }}">
-                            {% if post.pk|divisibleby:2 %}
-                                <img src="{% static 'letter_icon.png' %}" style="width: 100px;" />
-                            {% else %}
-                                <img src="{% static 'letter_icon_2.png' %}" style="width: 100px;" />
-                            {% endif %}
-                        </a>
-                        {{ post.pk }}번째 편지 from {{ post.author }}
-                        <img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-2 mr-2" style="width: 32px; height: 32px;" />
-                        발송 시간 : {{ post.created_at }}
-                    </div>
-                {% endfor %}
+                <a href="{% url 'happy_birthday:index' %}">
+                    <img src="{% static '지하철 전광판.png' %}" class="col-md-12 px-0 mb-3" >
+                </a>
+                <hr/><br>
             </div>
+
+            <div class="col-sm-12 text-center" style="margin: 0 auto;">
+                <a class="btn btn-success mb-5" style="width: 50%" href="{% url 'happy_birthday:post_new' %}">새 편지 쓰기</a>
+            </div>
+
+            <div class="col-sm-6 mb-5" style="margin: 0 auto;">
+                <div class="my-3 p-5 bg-white rounded shadow-sm shadow-lg">
+                    {% for post in post_list %}
+                        <div class="media text-muted pt-3 mb-5" style="width: 100%">
+                            <a class="mr-3" style="color: white;" href="{{ post.get_absolute_url }}">
+                                {% if post.pk|divisibleby:2 %}
+                                    <img src="{% static 'letter_icon.png' %}" style="width: 100px;" />
+                                {% else %}
+                                    <img src="{% static 'letter_icon_2.png' %}" style="width: 100px;" />
+                                {% endif %}
+                            </a>
+                            <div class="mt-auto mb-auto" style="width: 100%">
+                                {{ post.pk }}번째 편지 from {{ post.author }}
+                                <img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-2 mr-2" style="width: 32px; height: 32px;" />
+                                <br> {{ post.created_at | naturaltime }}
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}

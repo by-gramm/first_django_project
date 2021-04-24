@@ -1,38 +1,44 @@
 {% extends "layout.html" %}
-{% load bootstrap4 static %}
+{% load bootstrap4 static humanize %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="card-body col-sm-12">
+            <div class="card-body col-sm-6 mb-5 shadow-lg shadow-sm" style="margin: 0 auto;">
                 <div class="mb-3">
-                    <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 100px; height: 100px;" />
-                    {{ post.author }}
+                    <b>From</b> {{ post.author }}<img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-3" style="width: 32px; height: 32px;" />
                 </div>
-                <div class="mb-3">
-                    {{ post.content }} <br><br>
-                    {{ post.created_at }}
+                <div class="mb-4">
+                    <div class="mt-4 mb-3" style="font-size: 17px; font-family: 'KoPubWorld돋움체 Medium'">
+                        <p>{{ post.content|linebreaksbr }}</p>
+                    </div>
+                    {{ post.created_at | naturaltime }}
                 </div>
                 {% if post.author == user %}
-                    <a class="btn btn-primary mr-3" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
-                    <a class="btn btn-danger" href="{% url 'happy_birthday:post_delete' pk=post.pk %}">편지 삭제하기</a>
+                    <a class="btn btn-outline-primary mr-3" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
+                    <a class="btn btn-outline-danger" href="{% url 'happy_birthday:post_delete' pk=post.pk %}">편지 삭제하기</a>
                 {% else %}
-                    <a class="btn btn-warning" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">남이 쓴 편지 수정</a>
+                    <a class="btn btn-outline-danger" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">남이 쓴 편지 수정</a>
                 {% endif %}
             </div>
 
+            <div class="col-sm-12">
+                <hr/>
+            </div>
+
             {% for comment in comments %}
-                <div class="col-sm-12 mb-3">
-                    <div class="col-sm-8 mb-3">
-                        <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
-                        {{ comment.author }} | {{ comment.content }} <br>
-                        {{ comment.created_at }}
+                <div class="col-sm-12 ml-3 mb-3">
+                    <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
+                    <b>{{ comment.author }}</b> &nbsp; {{ comment.content }} <br>
+                    <div style="margin-left: 45px;">
+                        {{ comment.created_at | naturaltime }}
                     </div>
+
                     {% if user == comment.author %}
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 mt-3 ml-4">
                             <form action="{% url 'happy_birthday:comment_delete' post.pk comment.pk %}" method="POST">
                                 {% csrf_token %}
-                                <input class="btn btn-danger" type="submit" value="삭제"/>
+                                <input class="btn btn-outline-danger" type="submit" value="삭제"/>
                             </form>
                         </div>
                     {% endif %}
@@ -40,7 +46,7 @@
             {% endfor %}
 
             {% if user.is_authenticated %}
-                <div class="card-body col-sm-12">
+                <div class="card-body col-sm-12 ml-5 mr-5 mb-3" style="margin: 0 auto;">
                     <form action="{% url 'happy_birthday:comment_new' post.pk %}" method="POST">
                         {% csrf_token %}
                         {% bootstrap_form comment_form %}

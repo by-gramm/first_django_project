@@ -99,9 +99,11 @@ def kakao_callback(request):
     profile_image_url = profile.get("profile_image_url", None)
     email = kakao_account.get("email", None)
 
-    # 카카오 유저 정보에서 가져온 이메일과 같은 이메일을 쓰는 유저가 있다면
-    # 이미 가입한 사용자이므로 바로 로그인시킨다.
-    if User.objects.filter(email=email).exists():
+    # 카카오 유저 정보에서 가져온 이메일과 같은 이메일을 쓰는 유저가 있는 경우,
+    # 그 유저가 카카오 가입 유저가 아니라면 에러 메세지를 보여주고,
+    # 카카오 가입 유저라면 바로 로그인시킨다.
+    user = User.objects.filter(email=email).first()
+    if not user:
         # 카카오톡 사용자 이름이 이미 사용 중인 username과 겹치는 경우,
         # 겹치지 않도록 뒤에 숫자를 붙여준다.
         user = User.objects.filter(username=username).first()
@@ -128,6 +130,10 @@ def kakao_callback(request):
             user.profile_image.save(
                 f"{username}의 프로필 사진", ContentFile(profile_image_request.content)
             )
+
+    if user.login_method == 'email':
+        messages.error(request, "해당 계정은 이미 가입되어 있습니다. 사용자 이름/비밀번호로 로그인해주세요.")
+        return redirect('accounts:login')
 
     user.set_unusable_password()
     user.save()
