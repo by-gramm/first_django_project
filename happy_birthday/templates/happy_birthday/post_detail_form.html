@@ -4,15 +4,17 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="card-body col-sm-6 mb-5 shadow-lg shadow-sm" style="margin: 0 auto;">
+            <div class="card-body col-sm-6 mb-5 shadow-lg" style="margin: 0 auto; padding: 25px;">
                 <div class="mb-3">
-                    <b>From</b> {{ post.author }}<img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-3" style="width: 32px; height: 32px;" />
+                    From <b>{{ post.author }}</b> <img src="{{ post.author.profile_image_url }}" class="rounded-circle" style="width: 32px; height: 32px;" />
                 </div>
                 <div class="mb-4">
                     <div class="mt-4 mb-3" style="font-size: 17px; font-family: 'KoPubWorld돋움체 Medium'">
                         <p>{{ post.content|linebreaksbr }}</p>
                     </div>
-                    {{ post.created_at | naturaltime }}
+                    <div class="text-muted" style="font-size: 14px;">
+                        {{ post.created_at | naturaltime }}
+                    </div>
                 </div>
                 {% if post.author == user %}
                     <a class="btn btn-outline-primary mr-3" href="{% url 'happy_birthday:post_edit' pk=post.pk %}">내가 쓴 편지 수정</a>
@@ -27,18 +29,18 @@
             </div>
 
             {% for comment in comments %}
-                <div class="col-sm-12 ml-3 mb-3">
+                <div class="col-sm-12 ml-3 mb-4">
                     <img src="{{ comment.author.profile_image_url }}" class="rounded-circle mr-2" style="width: 32px; height: 32px;" />
                     <b>{{ comment.author }}</b> &nbsp; {{ comment.content }} <br>
-                    <div style="margin-left: 45px;">
+                    <div class="text-muted" style="margin-left: 45px; font-size: 14px;">
                         {{ comment.created_at | naturaltime }}
                     </div>
 
                     {% if user == comment.author %}
-                        <div class="col-sm-3 mt-3 ml-4">
+                        <div class="mt-2" style="margin-left: 45px;">
                             <form action="{% url 'happy_birthday:comment_delete' post.pk comment.pk %}" method="POST">
                                 {% csrf_token %}
-                                <input class="btn btn-outline-danger" type="submit" value="삭제"/>
+                                <input class="btn btn-outline-danger pt-0 pb-0 pl-1 pr-1" type="submit" value="삭제"/>
                             </form>
                         </div>
                     {% endif %}

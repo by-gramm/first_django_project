@@ -18,15 +18,15 @@
                     <li class="pt-3 pb-3">
                         <a style="color: #202326;" href="{% url 'accounts:delete' %}">회원 탈퇴</a>
                     </li>
-                    <div class="pt-3 pb-5 text-center">
-                        <a href="{% url 'etc' %}">
-                            <img src="{% static 'door_icon.png' %}" style="width: 100px;"/>
-                        </a>
-                    </div>
                 </ul>
+                <div class="pt-3 pb-5 text-center">
+                    <a href="{% url 'etc' %}">
+                        <img src="{% static 'door_icon.png' %}" style="width: 100px;"/>
+                    </a>
+                </div>
             </div>
 
-            <div class="col-sm-6" style="margin: 0 auto;">
+            <div class="col-sm-6 p-5 shadow-lg" style="margin: 0 auto;">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}

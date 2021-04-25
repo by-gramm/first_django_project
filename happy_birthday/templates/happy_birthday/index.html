@@ -16,20 +16,23 @@
             </div>
 
             <div class="col-sm-6 mb-5" style="margin: 0 auto;">
-                <div class="my-3 p-5 bg-white rounded shadow-sm shadow-lg">
+                <div class="my-3 p-5 bg-white shadow-lg">
                     {% for post in post_list %}
                         <div class="media text-muted pt-3 mb-5" style="width: 100%">
                             <a class="mr-3" style="color: white;" href="{{ post.get_absolute_url }}">
-                                {% if post.pk|divisibleby:2 %}
+                                {% if forloop.revcounter|divisibleby:2 %}
                                     <img src="{% static 'letter_icon.png' %}" style="width: 100px;" />
                                 {% else %}
                                     <img src="{% static 'letter_icon_2.png' %}" style="width: 100px;" />
                                 {% endif %}
                             </a>
-                            <div class="mt-auto mb-auto" style="width: 100%">
-                                {{ post.pk }}번째 편지 from {{ post.author }}
-                                <img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-2 mr-2" style="width: 32px; height: 32px;" />
-                                <br> {{ post.created_at | naturaltime }}
+                            <div class="mt-auto mb-auto" style="width: 100%; text-align: right;">
+                                {{ forloop.revcounter }}번째 편지 from <b>{{ post.author }}</b>
+                                <img src="{{ post.author.profile_image_url }}" class="rounded-circle ml-2" style="width: 32px; height: 32px;" />
+                                <br>
+                                <div class="mt-1 mr-2" style="font-size: 14px;">
+                                    {{ post.created_at | naturaltime }}
+                                </div>
                             </div>
 
                         </div>

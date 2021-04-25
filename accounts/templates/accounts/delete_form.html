@@ -26,13 +26,13 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 text-center" style="margin: 0 auto;">
-                <br><br><br><br>
+            <div class="col-sm-6 text-center p-5 shadow-lg" style="margin: 0 auto; vertical-align: middle;">
                 <form action="" method="POST">
                     {% csrf_token %}
                     <div>
                         {% if user.login_method == 'email' %}
-                            비밀번호 확인 : <input type="password" name="input_pwd">
+                            <br><br>
+                            비밀번호 확인 &nbsp; : &nbsp; <input type="password" name="input_pwd">
                         {% endif %}
                         <br><br>
                         정말로 탈퇴하시겠습니까? <input class="btn btn-outline-danger ml-3" type="submit" value="피도 눈물도 없이 탈퇴하기"/>
