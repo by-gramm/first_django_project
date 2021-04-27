@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from imagekit.models import ProcessedImageField
@@ -42,4 +43,4 @@ class User(AbstractUser):
         if self.profile_image:
             return self.profile_image.url
         else:
-            return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            return settings.STATIC_URL + "default_profile_image.png"

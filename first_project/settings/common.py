@@ -13,9 +13,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 INSTALLED_APPS = [
     # Django Apps
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,7 +35,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     # Third Apps
     'bootstrap4',
-    'debug_toolbar',
     'imagekit',
     # Local Apps
     'accounts',
@@ -40,8 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -61,7 +64,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -72,6 +74,7 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 SITE_ID = 2
@@ -127,17 +130,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'first_project', 'static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 INTERNAL_IPS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+

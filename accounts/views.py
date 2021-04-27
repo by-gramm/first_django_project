@@ -52,8 +52,7 @@ login = LoginView.as_view(template_name='accounts/login_form.html')
 
 def kakao_login(request):
     rest_api_key = str(os.getenv('KAKAO_ID'))
-    # TODO : 실서비스 시에 redirect_uri 바꾸기
-    redirect_uri = "http://localhost:8000/accounts/login/kakao/callback/"
+    redirect_uri = "https://minkitimes.herokuapp.com/accounts/login/kakao/callback/"
     return redirect(
         f"https://kauth.kakao.com/oauth/authorize?client_id={rest_api_key}&redirect_uri={redirect_uri}&response_type=code"
     )
@@ -70,8 +69,7 @@ def kakao_callback(request):
         return redirect('/')
 
     rest_api_key = str(os.getenv('KAKAO_ID'))
-    # TODO : 실서비스 시에 redirect_uri 바꾸기
-    redirect_uri = "http://localhost:8000/accounts/login/kakao/callback/"
+    redirect_uri = "https://minkitimes.herokuapp.com/accounts/login/kakao/callback/"
     client_secret = str(os.getenv('CLIENT_SECRET_KEY'))
     request_access_token = requests.post(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={rest_api_key}&redirect_uri={redirect_uri}&code={code}&client_secret={client_secret}",
